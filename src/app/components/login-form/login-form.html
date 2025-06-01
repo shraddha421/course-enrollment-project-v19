@@ -1,0 +1,69 @@
+<div class="login-container">
+  <form
+    #loginForm="ngForm"
+    (ngSubmit)="onLogin(loginForm)"
+    aria-labelledby="loginFormTitle"
+  >
+    <h2 id="loginFormTitle">Login</h2>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        name="email"
+        [(ngModel)]="user.email"
+        required
+        email
+        #emailRef="ngModel"
+        aria-label="Email"
+      />
+      @if(emailRef.invalid && emailRef.touched){
+      <mat-error>
+        @if(emailRef.errors?.['required']){
+        <span>Email is required</span>
+        } @else if(emailRef.errors?.['email']) {
+        <span >Invalid email format</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        name="password"
+        [(ngModel)]="user.password"
+        required
+        minlength="6"
+        #passwordRef="ngModel"
+        aria-label="Password"
+      />
+      @if(passwordRef.invalid && passwordRef.touched){
+      <mat-error>
+        @if(passwordRef.errors?.['required']) {
+        <span>Password is required</span>
+        } @else if(passwordRef.errors?.['minlength']) {
+        <span >Password must be at least 6 characters</span
+        >
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="loginForm.invalid"
+    >
+      Login
+    </button>
+    <div class="register-link">
+      New user?
+      <a (click)="routeToRegister()">Register here</a>
+    </div>
+  </form>
+</div>

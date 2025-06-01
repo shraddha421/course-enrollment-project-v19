@@ -1,0 +1,82 @@
+<form
+  [formGroup]="registrationForm"
+  (ngSubmit)="onSubmit()"
+  aria-labelledby="registrationFormTitle"
+>
+  <h2 id="registrationFormTitle">User Registration</h2>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      formControlName="name"
+      required
+      aria-required="true"
+      aria-label="Name"
+    />
+    @if(registrationForm.get('name')?.hasError('required')){
+    <mat-error> Name is required </mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      formControlName="email"
+      required
+      aria-required="true"
+      aria-label="Email"
+    />
+    @if(registrationForm.get('email')?.hasError('required')){
+    <mat-error> Email is required </mat-error>
+    } @else if(registrationForm.get('email')?.hasError('email')){
+    <mat-error> Enter a valid email </mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Phone Number</mat-label>
+    <input
+      matInput
+      formControlName="mobile"
+      required
+      aria-required="true"
+      aria-label="Phone Number"
+    />
+    @if(registrationForm.get('mobile')?.hasError('required')){
+
+    <mat-error> Phone number is required </mat-error>
+    } @else if(registrationForm.get('mobile')?.hasError('pattern')){
+
+    <mat-error> Enter a valid 10-digit phone number </mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      required
+      aria-label="Password"
+    />
+    @if(registrationForm.get('password')?.hasError('required')){
+
+    <mat-error>Password is required</mat-error>
+    } @else if(registrationForm.get('password')?.hasError('passwordStrength')){
+
+    <mat-error>
+      {{ registrationForm.get('password')?.getError('passwordStrength') }}
+    </mat-error>
+    }
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="registrationForm.invalid"
+  >
+    Register
+  </button>
+</form>
